@@ -1,0 +1,31 @@
+{
+  "name": "post-apocalypse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.8.6",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-react-jsx": "^7.8.3",
+    "ace-builds": "^1.4.8",
+    "babel-loader": "^8.0.6",
+    "chillogger": "^1.0.103",
+    "cors": "^2.8.5",
+    "css-loader": "^3.4.2",
+    "express": "^4.17.1",
+    "express-ws": "^4.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.13.1",
+    "react": "^16.13.0",
+    "react-ace": "^8.0.0",
+    "react-dom": "^16.13.0",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.1.3",
+    "webpack": "^4.41.6"
+  }
+}
