@@ -60,3 +60,4 @@ typings/
 .local-files/
 .trash/
 
+dist/
