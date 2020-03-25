@@ -84,6 +84,6 @@ module.exports = ()=>{
         if (errors.length) {
             return errors.forEach(error => log.warn(`got an error when compiling: ${error.message}`, error.stack))
         }
-        log.info(`app build completed`)
+        log.info(`app build ${stats.hash} completed`)
 });
 }
