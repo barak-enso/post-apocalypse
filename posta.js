@@ -21,10 +21,11 @@ switch (true) {
     default:
       break;
   }
+const flags = new Set(args)
 
 
 const log = new Logger("Main");
-appFactory();
+appFactory(flags.has("--dev") || flags.has("-d"));
 var app = express();
 require('express-ws')(app);
 app.use(cors());
@@ -34,27 +35,25 @@ app.post("/", (req, res) => req.pipe(res));
 var malWindows = new Set()
 
 app.ws('/malwindow-api', function(ws, req) {
+  ws.on("close", () => malWindows.delete(ws))
+  log.info(`new connection to from origin ${req.headers.origin}`)
   malWindows.add(ws)
 });
 
 app.ws('/agent-api', function(ws, req) {
+  log.info(`new agent connection from origin ${req.headers.origin}`)
   ws.on('message', function(msg) {
     malWindows.forEach(mw=>{
       try {
         mw.send(msg);    
       } catch (error) {
-        
+        console.log(error)
       }
     })
   });
+  
 });
 
-
-
-var server = app.listen(port, function () {
+app.listen(port, function () {
     log.info('posta listening on port: ' + port + ", with websockets listener")
 })
-// const wss = new SocketServer({ server });
-// wss.on('connection', function connection(ws) {
-//   ws.on("message", (message)=>ws.send(message))
-// });

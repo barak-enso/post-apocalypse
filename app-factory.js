@@ -1,8 +1,8 @@
 const webpack = require('webpack');
 const log = new (require("chillogger"))("app-factory");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-process.env.NODE_ENV =  process.env.NODE_ENV || "development"
-const {join} = require("path");
+process.env.NODE_ENV = process.env.NODE_ENV || "development"
+const { join } = require("path");
 
 
 function getCompilerConfig() {
@@ -11,12 +11,12 @@ function getCompilerConfig() {
             minimize: false,
         },
         entry: {
-            malwindow: join(__dirname,"src/malwindow.js"),
-            agent: join(__dirname,"src/agent.js"),
+            malwindow: join(__dirname, "src/malwindow.js"),
+            agent: join(__dirname, "src/agent.js"),
         },
         output: {
             filename: '[name].js',
-            path: join(__dirname,"dist"),
+            path: join(__dirname, "dist"),
             chunkFilename: '[name].bundle.js',
         },
         module: {
@@ -72,18 +72,23 @@ function getCompilerConfig() {
 }
 
 
+const compilerDone = (err, stats) => {
+    const { errors, missingDependencies } = stats.compilation;
+    if (errors.length) {
+        return errors.forEach(error => log.warn(`got an error when compiling: ${error.message}`, error.stack))
+    }
+    log.info(`app build ${stats.hash} completed`)
+}
 
-
-module.exports = ()=>{
+module.exports = (watch) => {
     const compiler = webpack(getCompilerConfig());
-    const watching = compiler.watch({
-        aggregateTimeout: 300,
-        poll: undefined
-    }, (err, stats) => { // Webpack stats Object
-        const { errors, missingDependencies } = stats.compilation;
-        if (errors.length) {
-            return errors.forEach(error => log.warn(`got an error when compiling: ${error.message}`, error.stack))
-        }
-        log.info(`app build ${stats.hash} completed`)
-});
+    if (watch) {
+        log.info("In dev mode. Starting watcher")
+        compiler.watch({
+            aggregateTimeout: 300,
+            poll: undefined
+        }, compilerDone)
+    } else {
+        compiler.run(compilerDone)
+    }
 }
