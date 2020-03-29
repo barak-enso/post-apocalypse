@@ -6,202 +6,211 @@ body {
     Consolas, source-code-pro, monospace;
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
+  background-color: #3a3d41;
 }
+$bgColor: #3a3d41;
+$hackerGreen: #66ff00;
+$propNameBlue: #9cdcfe;
+$wordColor: #c586c0;
+$varColor: #9cdcfe;
+$unusedVarColor: #9cdcfea0;
+$stringColor: #ce9178;
+$commentColor: #6a9955;
+$declarationColor: #569cd6;
+$functionNameColor: #dcdcaa;
+$classNameColor: #4ec9b0;
+$numberColor: #b5cea8;
+$coreSyntaxColor: #d4d4d4;
+$highLight: #6699cc85;
+$backgroundMain: #1f1f1f;
 
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+//layout
 #root {
   height: 100vh;
   max-height: 100vh;
   width: 100vw;
   max-width: 100vw;
+  overflow: hidden;
+  .traffic-panel,.action-panel {
+      vertical-align: top;
+      position: relative;
+      height: calc(100vh - 30px);
+      width: 50vw;
+      display: inline-block;
+      .log,.targets {
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: 100%;
+        max-width: 100%;
+      }
+  }
+  input {
+    height: 29px;
+    background-color: $backgroundMain;
+    line-height: 29px;
+    width: 100%;
+    padding: 2px 10px;
+    color: $hackerGreen;
+    border: 1px solid #e8e8e8;
+  }
 }
 
-.traffic {
-  width: 100%;
-  height: 100%;
+.ellipsis {
+  text-overflow: ellipsis;
+  max-width: 100%;
   overflow: hidden;
+  white-space: nowrap;
 }
+
+$tragetH: 80px;
 
 .log {
-  width: 50vw;
-  height: 100vh;
-  display: inline-block;
-  position: relative;
-  .header {
-    background-color: #444444;
-    color: white;
-  }
-  .body {
-    max-height: calc(100vh - 22px);
-    overflow-y: auto;
-    .row {
-      cursor: pointer;
-    }
-  }
-
-  .row {
-    width: 100%;
-    display: flex;
-    box-sizing: border-box;
-    border-bottom: 1px solid gray;
-    &.sent-from-me {
-      background-color: #9c3b3b;
-    }
-    &.sent-to-me {
-      background-color: #d87676;
-    }
-    &.selected {
-        background-color: #1d52c480;
-    }
-    > span {
-      border-right: 1px solid gray;
-
-      padding: 4px 10px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      flex-basis: 15%;
-      max-width: 15%;
-      overflow: hidden;
-      &:last-child {
-        flex-basis: 70%;
-        max-width: 70%;
-      }
-    }
-  }
-}
-
-.message-info {
-  background-color: #1287f5;
-  padding: 0.1em;
-  height: 1.2em;
-  line-height: 1.2em;
+  height: calc(100% - #{$tragetH});
+  max-height: calc(100% - #{$tragetH});
+  border-bottom: 2px solid #e8e8e8;
+  border-right: 2px solid #e8e8e8;
   display: flex;
-  padding-left: 10px;
-  > span {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    flex-basis: 50%;
-    max-width: 50%;
-    overflow: hidden;
-    color: white;
-    > span {
-      margin: 4px;
-    }
+  flex-direction: column;
+  // border-left: 4px solid transparent;
+  // border-right: 4px solid transparent;
+  > div {
+    padding: 0 8px;
+    border-bottom: 1px solid #e8e8e8;
   }
-}
-
-.windows {
-    height: calc(50vh - 1.2em);
-    overflow-x: hidden;
-    overflow-y: overlay;
-
-  .window {
+  .message{
+    color: $stringColor;
     padding: 2px;
-    width: 100%;
-    border-bottom: 1px solid #b8b8b8;
-    padding-bottom: 4px;
-    margin-bottom: 4px;
-    position: relative;
+    padding-left: 10px;
     
+    &.malwindow {
+      background-color: rgba(228, 70, 70, 0.308);
+    }
 
-    .sent-received {
-        margin-top: 15px;
-        display: inline-block;
-        vertical-align: bottom;
-        .received {
-            color: green;
-        }
-        .sent {
-            padding-left: 2px;
-            color: red;
-          }
-      }
-     
+    &.selected {
+      background-color: rgb(9, 71, 113);;
+    }
+
+    span {
+      vertical-align: middle;
+    }
+    .data {
+      font-size: 1.1em;
+      color: $hackerGreen;
+    }
+    .type {
+      margin-right: 10px;
+      color: $varColor;
+      font-size: 0.7em;
+    }
+    .arrow {
+      font-size: 1.5em;
+      color: $classNameColor;
+      line-height: 0;
+    }
     .href {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 100%;
-      overflow: hidden;
-    }
-
-    iframe {
-            width: calc(100% - 155px);
-            margin: 0 10px;
-    }
-
-    .iframe-action.send-to-frame,
-    .iframe-action.send-to-window {
-      background-color: #1b8b1b;
-      color: white;
-    }
-
-    .iframe-action.close,
-    .iframe-action.close-window {
-        background-color: #c41616;
-        color: white;
-      }
-
-    .iframe-action.send-to-frame,
-    .iframe-action.close,
-    .iframe-action.send-to-window,
-    .iframe-action.close-window
-     {
-        display: none;
-    }
-
-    > .actions {
-        position: absolute;
-        right: 5px;
-        bottom: 5px;
-        > button {
-            width: 80px;
-            cursor: pointer;
-            margin-right: 6px;
-            padding: 3px 6px;
-            margin-top: 5px;
-      }
-    }
-
-    &.opened-frame {
-        button {
-            display: block;
-        }
-        .iframe-action.send-to-frame,
-        .iframe-action.close {
-            display: block;
-        }
-        .iframe-action.load {
-            display: none;
-        }
-    }
-
-    &.open-window-error {
-        .iframe-action.open{
-            pointer-events: none;
-            background-color: #c8c8c8;
-            color: #444444;
-        }
-    }
-
-    &.opened-window {
-        // button {
-        //     display: block;
-        // }
-        .iframe-action.send-to-window,
-        .iframe-action.close-window {
-            display: inline-block;
-        }
-        .iframe-action.open {
-            display: none;
-        }
+      opacity: 0.7;
+      color: $functionNameColor;
     }
   }
 }
 
-.editor {
-  width: 50vw;
-  height: 60vh;
-  display: inline-block;
-  vertical-align: top;
+.targets {
+    border-left: 2px solid #e8e8e8;
+    // padding-top: 8px;
+    border-top: 4px solid $backgroundMain;
+    // border-bottom: 8px solid $backgroundMain;
+    border-bottom: 1px solid #e8e8e8;
+    height: $tragetH;
+    max-height: $tragetH;
+    color: $functionNameColor;
+    direction: rtl;
+    background-color: $backgroundMain;
+    
+    .selected {
+      background-color: $bgColor;
+    }
+
+    .target-window {
+      direction: ltr;
+      padding-inline-end: 10px;
+
+    }
+
+    .sent, .separator, .received {
+      display: inline-block;
+      text-align: center;
+    }
+    .sent {
+      width: 2.5em;
+      color: $wordColor;
+    }
+    .separator{
+      color: $coreSyntaxColor;
+      width: 1em;
+    }
+    .received {
+      width: 2.5em;
+      margin-right: 10px;
+      color: $hackerGreen;
+    }
+    .href {
+      font-size: 1.2em;
+    }
+  }
+
+.window-control-panel {
+  border-top: 2px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 8px;
+  max-width: 100%;
+  max-height: 50%;
+  height: calc(100% - 50vh);
+  position: relative;
+  
+  .href {
+    font-size: 1.3em;
+    height: 2em;
+    color: $functionNameColor;
+
+  }
+  .iframe {
+    display: inline-block;
+    width: calc(100% - 125px);
+    text-align: center;
+    height: calc(100% - 2em - 10px);
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    div {
+      width: 100%;
+      color: #e8e8e8;
+      background-color: #888888;
+      box-shadow: 1px 2px 4px 0px rgba(0,0,0,0.75);
+      overflow: auto;
+      max-height: 100%;
+      max-width: 100%;
+      iframe {
+        width: 100vw;
+        overflow: auto;
+        height: 100vh;
+      }
+    }
+  }
+  .actions 
+  {
+    vertical-align: top;
+    display: inline-block;
+    > button {
+      width: 55px;
+      margin: 3px;
+    display: block;
+    }
+  }
 }
 
 ::-webkit-scrollbar-button {
@@ -210,6 +219,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background-color: #c8c8c8;
+  opacity: 0.5;
 }
 
 ::-webkit-scrollbar-track {
@@ -217,6 +227,6 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 3px;
+  width: 10px;
   height: 3px;
 }
