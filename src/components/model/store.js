@@ -53,18 +53,18 @@ export default class Store {
         }
         // this.serachTerm
         try {
-            const serachExp = new RegExp(input,"i");
+            const serachExp = new RegExp(input, "i");
             this.filterFunction = (message = "") => serachExp.exec(JSON.stringify(message.rawMessage))
             this.trigger("change");
         } catch (error) {
-            this.filterFunction = (message = "") => JSON.stringify(message.rawMessage).indexOf(input) >=0
+            this.filterFunction = (message = "") => JSON.stringify(message.rawMessage).indexOf(input) >= 0
             this.trigger("change");
         }
 
     }
 
     isMessagevisible(message) {
-        return (this.filterFunction || (()=>true))(message)
+        return (this.filterFunction || (() => true))(message)
     }
 
 
@@ -106,10 +106,20 @@ export default class Store {
         return store
     }
 
+    addTargetByHref(href) {
+        if (!this.targets[href]) {
+            let target = new TargetWindow(href, this);
+            this.targets.push(target);
+            Object.defineProperty(this.targets, href, {
+                value: target
+            })
+        }
+        return this.targets[href];
+    }
 
     deleteSelectedMessages() {
         const messageToSelectAfterDeletion = this.messageAtCursor.next();
-        const selectedVisableMessages = Array.from(this.selectedMessages).filter(m=>m.isVisible);
+        const selectedVisableMessages = Array.from(this.selectedMessages).filter(m => m.isVisible);
         let rawMessages = new Set(Array.from(selectedVisableMessages).map(m => m.rawMessage));
         this._rawMessages = this._rawMessages.filter(message => !rawMessages.has(message))
         this.messages = this.messages.filter(message => !this.selectedMessages.has(message) && message.isVisible);
@@ -144,11 +154,11 @@ export default class Store {
     }
 
     selectAllVisable() {
-        this.selectedMessages = new Set(this.messages.filter(m=>m.isVisible()));
+        this.selectedMessages = new Set(this.messages.filter(m => m.isVisible()));
         return this
     }
 
-    selectTargetByHref(href){
+    selectTargetByHref(href) {
         this.targets[href].select();
         return this
     }

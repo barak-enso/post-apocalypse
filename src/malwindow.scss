@@ -48,7 +48,7 @@ $backgroundMain: #1f1f1f;
         max-width: 100%;
       }
   }
-  input {
+  >input {
     height: 29px;
     background-color: $backgroundMain;
     line-height: 29px;
@@ -181,9 +181,31 @@ $tragetH: 80px;
   position: relative;
   
   .href {
-    font-size: 1.3em;
     height: 2em;
-    color: $functionNameColor;
+    
+    input {
+      font-size: 1.15em;
+      background-color: transparent;
+      width: calc(100% - 20px);
+      padding: 2px 10px;
+      color: $functionNameColor;
+      border: none;
+      background-color: $backgroundMain;
+    }
+
+    .mask {
+      position: absolute;
+      z-index: 0;
+      opacity: 0.3;
+    }
+    .real {
+      z-index: 10;
+      position: absolute;
+      border: 1px solid $functionNameColor;
+    }
+    .with-mask {
+      background: transparent;
+    }
 
   }
   .iframe {

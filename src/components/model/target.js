@@ -30,7 +30,9 @@ export default class TargetWindow {
     select() {
         this.store.selectedTarget = this;
         this.store.trigger("change");
-        document.querySelector("#" + this.id).scrollIntoView({ block: "nearest", inline: "nearest" });
+        setTimeout(()=>{
+            document.querySelector("#" + this.id).scrollIntoView({ block: "nearest", inline: "nearest" });
+        },0)
         return this;
     }
     unSelect() {

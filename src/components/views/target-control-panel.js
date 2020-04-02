@@ -84,13 +84,41 @@ export default class TargetControlPanel extends Component {
         }
         
     }
+
+    onChangeTaret(e) {
+        const { store } = this.props;
+        store.selectedTarget.userInputHerf = e.target.value;
+        this.setState({})
+    }
+
+    changeTaretOnEnter(e) {
+        const { store } = this.props;
+        if (event.key === "Enter") {
+            if (store.selectedTarget) store.selectedTarget.userInputHerf = store.selectedTarget.href;
+            store.addTargetByHref(e.target.value).select();
+            this.setState({})
+        }
+    }
     
+    onlyInput () {
+        return <div className="window-control-panel">
+            <div className="href">
+                <input className="real" onKeyPress={(e)=>this.changeTaretOnEnter(e)}></input>
+            </div>
+        </div>
+    }
+
     render() {
         const { store } = this.props;
-        if (!store.selectedTarget) return <div className="window-control-panel"></div>
-        const { href } = store.selectedTarget;
+        if (!store.selectedTarget) return this.onlyInput();
+        var { href, userInputHerf } = store.selectedTarget;
+        // if (href !== userInputHerf) return this.onlyInput();
+        userInputHerf = userInputHerf || href;
         return <div className="window-control-panel">
-            <div className="href ellipsis">{href}</div>
+            <div className="href">
+                <input className="mask" value={href}></input>
+                <input className="real with-mask" value={userInputHerf} onChange={(e)=>this.onChangeTaret(e)} onKeyPress={(e)=>this.changeTaretOnEnter(e)}></input>
+            </div>
             <span className="iframe">
                 <div ref={ref => this.iframeContainerElement = ref}></div>
             </span>
