@@ -22,27 +22,27 @@ class App extends Component {
     }
 
     onKeyDown (event, handle) {
-        switch (event.keyCode) {
-            case 90: //z
-                return;
-            case 88: //x
-                return;
-            case 67: //c
-                // let { log = [] } = _traffic.state || {};
-                // log = [];
-                // localStorage.setItem("log", JSON.stringify(log.slice(0, 1000)))
-                // this.setState({ log })
-                // this.props.clearLog();
-                return;
-            default:
-                break;
-        }
+        // switch (event.keyCode) {
+        //     case 90: //z
+        //         return;
+        //     case 88: //x
+        //         return;
+        //     case 67: //c
+        //         // let { log = [] } = _traffic.state || {};
+        //         // log = [];
+        //         // localStorage.setItem("log", JSON.stringify(log.slice(0, 1000)))
+        //         // this.setState({ log })
+        //         // this.props.clearLog();
+        //         return;
+        //     default:
+        //         break;
+        // }
     
         switch (event.key) {
             // Moving up and down
             // Either arrow keys, tab/shift+tab, or ctrl+j/ctrl+k (what's used in vim sometimes)
             case "ArrowUp": {
-                let previous = handle.previous().select();
+                let previous = handle.previous().select(event);
                 document.querySelector("#"+previous.id).scrollIntoView(
                     {block: "nearest", inline: "nearest"}
                     );
@@ -51,7 +51,7 @@ class App extends Component {
                 break;
             }
             case "ArrowDown": {
-                let next = handle.next().select();
+                let next = handle.next().select(event);
                 document.querySelector("#"+next.id).scrollIntoView(
                     {block: "nearest", inline: "nearest"}
                     // {block: "end", inline: "nearest"}
@@ -61,24 +61,13 @@ class App extends Component {
             }
     
             case "Delete": {
+                handle.delete()
                 // let { selectedIndex = 0 } = this.state || {};
                 // this.props.clearLog(selectedIndex);
                 break;
             }
-            case "ArrowRight": {
-                break;
-            }
-            case "Tab": {
-                break;
-            }
-    
-            case "Enter": {
-                break;
-            }
-            case "Escape": {
-    
-            }
             default:
+                handle.handleKeyDownEvent(event)
                 break;
         }
     }
@@ -90,7 +79,7 @@ class App extends Component {
             <div className="traffic-panel" 
             // onKeyDown={(e)=>this.onKeyDown(e)}
             >
-                <div className="log" onKeyDown={e => this.onKeyDown(e, store.selectedMessage)} tabIndex="0">
+                <div className="log" onKeyDown={e => this.onKeyDown(e, store.messageAtCursor)} tabIndex="0">
                     {(messages).map((message, index) => 
                                 <MessageRow
                                     key={index}

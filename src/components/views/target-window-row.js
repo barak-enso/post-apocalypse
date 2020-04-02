@@ -8,7 +8,7 @@ export default class TargetWindowRow extends Component {
         return <div
             id={id}
             tabIndex="-1"
-            onClick={(e) => target.select()}
+            onClick={(e) => target.select(e)}
             className={classnames(
                 "target-window",
                 "ellipsis",

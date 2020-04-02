@@ -23,7 +23,7 @@ export default class MessageRow extends Component {
                 receivingWindow === location.href ? "malwindow" : null,
                 senderDomain === location.hostname ? "malwindow" : null,
                 selected ? "selected" : "")}
-            onClick={() => message.select(message)}
+            onClick={(event) => message.select(event)}
             id={id}>
             <div className="data ellipsis">
                 <span className={classnames("type", dataType)}> {dataType}</span>
