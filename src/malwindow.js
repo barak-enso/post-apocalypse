@@ -23,38 +23,39 @@ class App extends Component {
 
     onKeyDown (event, handle) {
         if (!handle) return
-        switch (event.key) {
-            // Moving up and down
-            // Either arrow keys, tab/shift+tab, or ctrl+j/ctrl+k (what's used in vim sometimes)
-            case "ArrowUp": {
-                let previous = handle.previous().select(event);
-                document.querySelector("#"+previous.id).scrollIntoView(
-                    {block: "nearest", inline: "nearest"}
-                    );
-                // element.scrollIntoView();
-                event.preventDefault()
-                break;
-            }
-            case "ArrowDown": {
-                let next = handle.next().select(event);
-                document.querySelector("#"+next.id).scrollIntoView(
-                    {block: "nearest", inline: "nearest"}
-                    // {block: "end", inline: "nearest"}
-                    );
-                event.preventDefault()
-                break;
-            }
+        handle.handleKeyDownEvent(event);
+        // switch (event.key) {
+        //     // Moving up and down
+        //     // Either arrow keys, tab/shift+tab, or ctrl+j/ctrl+k (what's used in vim sometimes)
+        //     case "ArrowUp": {
+        //         let previous = handle.previous().select(event);
+        //         // document.querySelector("#"+previous.id).scrollIntoView(
+        //         //     {block: "nearest", inline: "nearest"}
+        //         //     );
+        //         // element.scrollIntoView();
+        //         event.preventDefault()
+        //         break;
+        //     }
+        //     case "ArrowDown": {
+        //         let next = handle.next().select(event);
+        //         // document.querySelector("#"+next.id).scrollIntoView(
+        //         //     {block: "nearest", inline: "nearest"}
+        //         //     // {block: "end", inline: "nearest"}
+        //         //     );
+        //         event.preventDefault()
+        //         break;
+        //     }
     
-            case "Delete": {
-                handle.delete()
-                // let { selectedIndex = 0 } = this.state || {};
-                // this.props.clearLog(selectedIndex);
-                break;
-            }
-            default:
-                handle.handleKeyDownEvent(event)
-                break;
-        }
+        //     case "Delete": {
+        //         handle.delete()
+        //         // let { selectedIndex = 0 } = this.state || {};
+        //         // this.props.clearLog(selectedIndex);
+        //         break;
+        //     }
+        //     default:
+                
+        //         break;
+        // }
     }
 
     render() {

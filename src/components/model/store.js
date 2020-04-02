@@ -108,10 +108,11 @@ export default class Store {
 
 
     deleteSelectedMessages() {
-        let messageToSelectAfterDeletion = this.messageAtCursor.next();
-        let rawMessages = new Set(Array.from(this.selectedMessages).map(m => m.rawMessage));
+        const messageToSelectAfterDeletion = this.messageAtCursor.next();
+        const selectedVisableMessages = Array.from(this.selectedMessages).filter(m=>m.isVisible);
+        let rawMessages = new Set(Array.from(selectedVisableMessages).map(m => m.rawMessage));
         this._rawMessages = this._rawMessages.filter(message => !rawMessages.has(message))
-        this.messages = this.messages.filter(message => !this.selectedMessages.has(message));
+        this.messages = this.messages.filter(message => !this.selectedMessages.has(message) && message.isVisible);
         this.unselectAll()
             .selectMessage(messageToSelectAfterDeletion);
         return this
@@ -142,10 +143,14 @@ export default class Store {
         return this
     }
 
-    selectTargetByHref(href){
-        this.selectedTarget = this.targets[href];
+    selectAllVisable() {
+        this.selectedMessages = new Set(this.messages.filter(m=>m.isVisible()));
         return this
-        // const targets = this.targets.filter
+    }
+
+    selectTargetByHref(href){
+        this.targets[href].select();
+        return this
     }
 
     get messageAtCursor() {

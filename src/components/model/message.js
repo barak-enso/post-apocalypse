@@ -6,13 +6,6 @@ export default class Message {
         this.sendingWindowUrl = new URL(sendingWindow)
         this.receivingWindowUrl = new URL(receivingWindow)
         Object.assign(this, message);
-        store.on("selection", index => {
-            if (index !== store._heap.indexOf(this)) {
-                this.unSelect()
-                store.trigger("change")
-            }
-
-        })
     }
 
     get senderDomain() {
@@ -46,6 +39,7 @@ export default class Message {
                     .trigger("change")
                 break;
         }
+        document.querySelector("#"+this.id).scrollIntoView({block: "nearest", inline: "nearest"});
         return this;
     }
 
@@ -80,9 +74,40 @@ export default class Message {
         return this.store.isMessagevisible(this)
     }
 
-    
+    unSelect(){
+        this.store.unselectMessage(this);
+        return this;
+    }
+
     handleKeyDownEvent(event) {
         switch (event.key) {
+            case "a": {
+                if (event.ctrlKey)
+                this.store.selectAllVisable().trigger("change");
+                event.preventDefault();
+            }
+            case "ArrowUp": {
+                if (event.shiftKey) {
+                    if (this.previous().selected) {
+                        this.unSelect()
+                    }
+                    
+                }
+                this.previous().select(event);
+                event.preventDefault()
+                break;
+            }
+            case "ArrowDown": {
+                if (event.shiftKey) {
+                    if (this.next().selected) {
+                        this.unSelect()
+                    }
+                    
+                }
+                this.next().select(event);
+                event.preventDefault()
+                break;
+            }
             case "ArrowRight": {
                 if (event.ctrlKey) {
                     // console.log(`open ${this.receivingWindow}`)
@@ -110,6 +135,9 @@ export default class Message {
                 // );
                 event.preventDefault()
                 break;
+            }
+            case "Delete": {
+                this.delete()
             }
         }
     }

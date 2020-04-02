@@ -29,7 +29,8 @@ export default class TargetWindow {
     }
     select() {
         this.store.selectedTarget = this;
-        this.store.trigger("change")
+        this.store.trigger("change");
+        document.querySelector("#" + this.id).scrollIntoView({ block: "nearest", inline: "nearest" });
         return this;
     }
     unSelect() {
@@ -66,6 +67,16 @@ export default class TargetWindow {
     }
 
     handleKeyDownEvent(event) {
-        // console.log(event)
+        switch (event.key) {
+            case "ArrowUp": {
+                this.previous().select(event);
+                return event.preventDefault()
+            }
+            case "ArrowDown": {
+                this.next().select(event);
+                event.preventDefault()
+                break;
+            }
+        }
     }
 }
