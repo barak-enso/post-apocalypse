@@ -33,9 +33,9 @@ export default class MessageRow extends Component {
 
             </div>
             <div className="meta ellipsis">
-                <span className="href"> {sendingWindow} </span>
+                <span className="href" onClick={()=>store.selectTargetByHref(sendingWindow)}> {sendingWindow} </span>
                 <span className="arrow">&rarr;</span>
-                <span className="href from"> {receivingWindow} </span>
+                <span className="href from"  onClick={()=>store.selectTargetByHref(receivingWindow)}> {receivingWindow} </span>
             </div>
         </div>
     }

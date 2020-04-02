@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import AceEditor from "react-ace";
 import {MessageRow, TargetControlPanel, TargetWindowRow} from "./components/views/";
-import Store from "./components/store";
+import Store from "./components/model/store";
 
 import "ace-builds/webpack-resolver";
 import "ace-builds/src-noconflict/mode-json";
@@ -22,22 +22,7 @@ class App extends Component {
     }
 
     onKeyDown (event, handle) {
-        // switch (event.keyCode) {
-        //     case 90: //z
-        //         return;
-        //     case 88: //x
-        //         return;
-        //     case 67: //c
-        //         // let { log = [] } = _traffic.state || {};
-        //         // log = [];
-        //         // localStorage.setItem("log", JSON.stringify(log.slice(0, 1000)))
-        //         // this.setState({ log })
-        //         // this.props.clearLog();
-        //         return;
-        //     default:
-        //         break;
-        // }
-    
+        if (!handle) return
         switch (event.key) {
             // Moving up and down
             // Either arrow keys, tab/shift+tab, or ctrl+j/ctrl+k (what's used in vim sometimes)
@@ -80,7 +65,7 @@ class App extends Component {
             // onKeyDown={(e)=>this.onKeyDown(e)}
             >
                 <div className="log" onKeyDown={e => this.onKeyDown(e, store.messageAtCursor)} tabIndex="0">
-                    {(messages).map((message, index) => 
+                    {(messages).filter((message)=>message.isVisible()).map((message, index) => 
                                 <MessageRow
                                     key={index}
                                     message={message}
