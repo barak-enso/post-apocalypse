@@ -62,12 +62,13 @@ export default class Message {
 
     next() {
         let _index = this.index;
-        const next = (_index + 1 === this.store.messages.length) ? this.store.messages[_index] : this.store.messages[_index + 1]
-        return next
+        const next = (_index + 1 === this.store.messages.length) ? this.store.messages[_index] : this.store.messages[_index + 1];
+        return next.isVisible() ? next : next.next()
     }
     previous() {
         let _index = this.index;
-        return (_index === 0) ? this : this.store.messages[_index - 1]
+        const previous = (_index === 0) ? this : this.store.messages[_index - 1]
+        return previous.isVisible() ? previous : previous.previous();
     }
 
     isVisible() {
