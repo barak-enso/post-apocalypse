@@ -18,31 +18,45 @@ export default class TargetControlPanel extends Component {
         return document.querySelector(`iframe[src="${this.href}"]`) ? true : false
     }
 
-    isWindowOpen() {
-        return this.childWindow && this.childWindow.opend
+
+    get childWindow() {
+        const dummyOrClosedWindow = {
+            isWindowOpen: ()=>false,
+            close: ()=>{},
+            postMessage: ()=>console.log("no handle to window")
+
+        }
+        return this.childWindows ? 
+            this.childWindows[this.href] ? {
+                postMessage: (...args)=> {
+                    try {
+                        this.childWindows[this.href].postMessage(...args)
+                    } catch (error) {
+                        console.log(error)
+                    }
+                },
+                isWindowOpen: () => !this.childWindows[this.href].closed,
+                close: ()=> {
+                    try {
+                        this.childWindows[this.href].close();
+                        this.setState({})
+                    } catch (error) {
+                    }
+                }
+             } : dummyOrClosedWindow : dummyOrClosedWindow
     }
 
     openWindow() {
+        this.childWindows  =  this.childWindows || {};
         try {
-            this.childWindow = window.open(href, `mywindow${Object.keys(this.windowsHandles).length + 1}`, "width=350,height=250");
-            setTimeout(() => {
-                this.setState({})
-            }, 1000)
-
+            this.childWindows [this.href] = window.open(this.href, `posta-${this.href}`, "width=350,height=250");
+            this.setState({})
         } catch (error) {
             console.log(error)
         }
     }
 
-    closeWindow() {
-        try {
-            this.childWindow.close();
-            setTimeout(() => {
-                this.setState({})
-            }, 1000)
-        } catch (error) {
-        }
-    }
+    
 
     get href() {
         const { store } = this.props;
@@ -78,9 +92,9 @@ export default class TargetControlPanel extends Component {
     sendToWindow(message, format) {
         message = this.formatMessage(message, format);
         try {
-            this.childWindow.postMessage(message);    
+            this.childWindow.postMessage(message, "*");    
         } catch (error) {
-            
+            console.log(error)
         }
         
     }
@@ -108,6 +122,8 @@ export default class TargetControlPanel extends Component {
         </div>
     }
 
+    
+
     render() {
         const { store } = this.props;
         if (!store.selectedTarget) return this.onlyInput();
@@ -131,9 +147,9 @@ export default class TargetControlPanel extends Component {
                 open: this.loadFrame.bind(this)
             }, {
                 type: "window",
-                kill: this.closeWindow.bind(this),
+                kill: ()=>this.childWindow.close(),
                 open: this.openWindow.bind(this),
-                isOpened: this.isWindowOpen.bind(this),
+                isOpened: ()=>this.childWindow.isWindowOpen(),
                 send: this.sendToWindow.bind(this)
             }]).map(({
                 type,
