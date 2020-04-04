@@ -20,6 +20,7 @@ export default class Message {
 
     toString(minimize) {
         const { data } = this;
+        if (!data) return data
         return typeof (data) === "object" ? JSON.stringify(data, null, minimize ? "" : "\t") : data.toString()
     }
 
