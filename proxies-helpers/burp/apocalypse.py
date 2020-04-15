@@ -69,7 +69,7 @@ class BurpExtender(IBurpExtender, IHttpListener):
             
             # TODO: if there is no <head> we need to inject one.
             # adding injected script into header tag
-            modifiedResBody = resBody.replace("<head>", "<head>{}\n".format(injectedScript))
+            modifiedResBody = resBody.replace("<head>", "<head>{}\n".format(injectedScript), 1)
             modifiedResponse = self._helpers.buildHttpMessage(newHeaders, self._helpers.stringToBytes(modifiedResBody))
             messageInfo.setResponse(modifiedResponse)
 
