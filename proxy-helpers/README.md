@@ -4,10 +4,8 @@ For optimal setup, you'll need to:
 - Have agent-api & malwindow-api accessible websocket available at ws(+s)://post.apocalypse/...
 - have agent.js injected into to every browser Window (excluding post.apocalypse malwindow), prior to any other script.
 
-This is most easily done using a debugger proxy like burp or [Whistle](https://github.com/avwo/whistle)
-
 ## Proxy setup
-### Whistle
+### [Whistle](https://github.com/avwo/whistle)
 rules
 ```
 https://post.apocalypse http://127.0.0.1:28010
@@ -24,4 +22,11 @@ values/post.apocalypse.json
 
 ```
 
-### Burp
+### [Burp](https://portswigger.net/burp)
+1. Download [Jython standalone JAR](http://www.jython.org/download.html)
+2. Open burp -> Extender -> Options -> Python Environment -> Select File -> Choose the Jython standalone JAR
+3. Open Burp -> Extender -> Extensions -> Add -> Choose apocalypse.py file inside post-apocalypse/proxy-helpers/burp directory.
+4. From now on, agent.js will be injected into head tag for each HTML response
+
+
+
