@@ -1,7 +1,7 @@
 # Post Apocalypse
 Post Apocalypse is a tool for researching postMessage communication, it allows you to track, explore and exploit postMessages vulnerabilities, with abilities to replay messages sent between windows of any attached browser.
 
-<img>
+![alt tag](https://raw.githubusercontent.com/gourarie/post-apocalypse/master/posta.png)
 
 # Install
 Node is required
