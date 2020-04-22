@@ -1,7 +1,7 @@
 # Post Apocalypse
 Post Apocalypse is a tool for researching postMessage communication, it allows you to track, explore and exploit postMessages vulnerabilities, with abilities to replay messages sent between windows of any attached browser.
 
-![alt tag](https://raw.githubusercontent.com/gourarie/post-apocalypse/master/posta.png)
+![alt tag](https://raw.githubusercontent.com/gourarie/post-apocalypse/master/images/posta.png)
 
 # Install
 Node is required to be installed
@@ -24,7 +24,7 @@ Post Apocalypse needs 2 basic features to happen:
 
 The agent.js hooks and wraps postMessages' receievers in order to intercept postMessages by overwrite all event listeners related to messages handling, each postMessage received by the window managed by agent.js, will be sent to posta.js server, which allows you to view all postMessages on the post-apocalypse UI in order to allow you perform your research easily.
 
-![alt tag](https://raw.githubusercontent.com/gourarie/post-apocalypse/master/posta-architecture.png)
+![alt tag](https://raw.githubusercontent.com/gourarie/post-apocalypse/master/images/posta-architecture.png)
  
 
 # Authors
