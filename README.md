@@ -4,7 +4,7 @@ Post Apocalypse is a tool for researching postMessage communication, it allows y
 ![alt tag](https://raw.githubusercontent.com/gourarie/post-apocalypse/master/posta.png)
 
 # Install
-Node is required
+Node is required to be installed
 ```bash
 git clone https://github.com/gourarie/post-apocalypse.git
 cd post-apocalypse
@@ -13,13 +13,12 @@ npm install
 
 # How to use
 1. Make sure posta server is up and running (via `node posta.js`)
-2. Use one of the proxy-helpers to inject the agent.js
+2. Use one of the proxy-helpers to inject the [agent.js](https://github.com/gourarie/post-apocalypse/blob/master/src/agent.js)
 3. Make sure your browser is passing through the proxy and agent.js found in responses `head` tag
 4. Browse to http://post.apocalypse:28010/ and hack
 
 # How it works? 
-Post Apocalypse uses Javascript hooks and wraps postMessages' receievers in order to intercept postMessages by injecting a [agent.js](https://github.com/gourarie/post-apocalypse/blob/master/src/agent.js) script into any website you visit; you can do so easily via [proxy-helpers](https://github.com/gourarie/post-apocalypse/tree/master/proxy-helpers).
-The agent communicates with posta server allows you to get a nice UI to investigate on.
+Post Apocalypse uses Javascript hooks and wraps postMessages' receievers in order to intercept postMessages<br>by injecting a [agent.js](https://github.com/gourarie/post-apocalypse/blob/master/src/agent.js) script into any head tag in responses for web pages you visit; you can do so easily via [proxy-helpers](https://github.com/gourarie/post-apocalypse/tree/master/proxy-helpers).<br>The agent communicates with posta server allows you to have a nice UI to perform investigations on.
 
 # Authors
 Chen Gour Arie<br>
