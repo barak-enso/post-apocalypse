@@ -18,7 +18,14 @@ npm install
 4. Browse to http://post.apocalypse:28010/ and hack
 
 # How it works? 
-Post Apocalypse uses Javascript hooks and wraps postMessages' receievers in order to intercept postMessages<br>by injecting a [agent.js](https://github.com/gourarie/post-apocalypse/blob/master/src/agent.js) script into any head tag in responses for web pages you visit; you can do so easily via [proxy-helpers](https://github.com/gourarie/post-apocalypse/tree/master/proxy-helpers).<br>The agent communicates with posta server allows you to have a nice UI to perform investigations on.
+Post Apocalypse needs 2 basic features to happen:
+1. agent.js to be injected on each HTML response head tag (easily done via [proxy-helpers](https://github.com/gourarie/post-apocalypse/tree/master/proxy-helpers))
+2. posta.js server to be up and running
+
+The agent.js hooks and wraps postMessages' receievers in order to intercept postMessages by overwrite all event listeners related to messages handling, each postMessage received by the window managed by agent.js, will be sent to posta.js server, which allows you to view all postMessages on the post-apocalypse UI in order to allow you perform your research easily.
+
+![alt tag](https://raw.githubusercontent.com/gourarie/post-apocalypse/master/posta-architecture.png)
+ 
 
 # Authors
 Chen Gour Arie<br>
