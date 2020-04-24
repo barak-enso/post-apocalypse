@@ -13,12 +13,12 @@ npm install
 
 # How to use
 1. Make sure posta server is up and running (via `node posta.js`)
-2. Use one of the proxy-helpers to inject the [agent.js](https://github.com/gourarie/post-apocalypse/blob/master/src/agent.js)
+2. Use one of the [proxy-helpers](https://github.com/gourarie/post-apocalypse/tree/master/proxy-helpers) to inject [agent.js](https://github.com/gourarie/post-apocalypse/blob/master/src/agent.js)
 3. Make sure your browser is passing through the proxy and agent.js found in responses `head` tag
-4. Browse to http://post.apocalypse:28010/ and hack
+4. Browse to http://localhost:28010/ and hack
 
 # How it works? 
-Post Apocalypse needs 2 basic features to happen:
+Post Apocalypse needs 2 basic features to be implemented:
 1. agent.js to be injected on each HTML response head tag (easily done via [proxy-helpers](https://github.com/gourarie/post-apocalypse/tree/master/proxy-helpers))
 2. posta.js server to be up and running
 
