@@ -4,7 +4,7 @@ Post Apocalypse is a tool for researching postMessage communication, it allows y
 ![alt tag](https://raw.githubusercontent.com/gourarie/post-apocalypse/master/images/posta.png)
 
 # Install
-Node is required to be installed
+Node required to be pre installed
 ```bash
 git clone https://github.com/gourarie/post-apocalypse.git
 cd post-apocalypse
