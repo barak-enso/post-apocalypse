@@ -8,7 +8,7 @@ class BurpExtender(IBurpExtender, IHttpListener):
     def registerExtenderCallbacks(self, callbacks):
         self._callbacks = callbacks
         self._helpers = callbacks.getHelpers()
-        self.postApocalypseHost = "post.apocalypse"
+        self.postApocalypseHost = "localhost"
         
         callbacks.setExtensionName("PostMessage Apocalypse")
         callbacks.registerHttpListener(self)
