@@ -4,15 +4,18 @@
 from burp import IBurpExtender
 from burp import IHttpListener
 
+NAME = 'PostMessage Apocalypse'
+VERSION = '0.1'
+
 class BurpExtender(IBurpExtender, IHttpListener):
     def registerExtenderCallbacks(self, callbacks):
         self._callbacks = callbacks
         self._helpers = callbacks.getHelpers()
         self.postApocalypseHost = "localhost"
         
-        callbacks.setExtensionName("PostMessage Apocalypse")
+        callbacks.setExtensionName(NAME)
         callbacks.registerHttpListener(self)
-
+        print "Successfully loaded PostMessage Apocalypse v" + VERSION
 
     #
     # implement IHttpListener
@@ -66,12 +69,19 @@ class BurpExtender(IBurpExtender, IHttpListener):
                 return
             
             resBody = self._helpers.bytesToString(res[analyzedRes.getBodyOffset():])
-            
-            # TODO: if there is no <head> we need to inject one.
+
             # adding injected script into header tag
-            modifiedResBody = resBody.replace("<head>", "<head>{}\n".format(injectedScript), 1)
+            # if there is no <head> inject one.
+            if "<head>" in resBody:
+                modifiedResBody = resBody.replace("<head>", "<head>{}\n".format(injectedScript), 1)
+            elif:
+                modifiedResBody = resBody.replace("<html>", "<html><head>{}\n</head>".format(injectedScript), 1)
+            else:
+                modifiedResBody = resBody.replace("","<head>{}\n</head>".format(injectedScript),1)
+                
             modifiedResponse = self._helpers.buildHttpMessage(newHeaders, self._helpers.stringToBytes(modifiedResBody))
             messageInfo.setResponse(modifiedResponse)
 
         return
 
+        
